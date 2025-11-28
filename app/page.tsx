@@ -9,6 +9,7 @@ export default function Home() {
     'use server'
 
     // Get the data from the form
+    const name = formData.get('name')
     const email = formData.get('email')
 
     // Connect to Supabase
@@ -20,10 +21,10 @@ export default function Home() {
     // Insert the data
     const { error } = await supabase
       .from('subscribers')
-      .insert({ email })
+      .insert({ email, name })
 
-    if (error) {
-      console.error(error)
+    if (!name || !email) {
+      console.error("Missing name or email")
       return // In a real app, you'd show an error message
     }
 
@@ -42,6 +43,15 @@ export default function Home() {
 
         {/* The Form */}
         <form action={addSubscriber} className="flex flex-col gap-4 items-center">
+          {/* NEW FIELD: Name */}
+          <input 
+            type="text" 
+            name="name" // <-- CRITICAL: This name must match the database column.
+            placeholder="Enter your name"
+            required
+            className="p-3 rounded bg-white border border-gray-300 text-gray-900 placeholder-gray-500 min-w-[300px]"
+          />
+          {/* Existing Email Field */}
           <input 
             type="email" 
             name="email" 
