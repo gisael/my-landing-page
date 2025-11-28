@@ -47,7 +47,7 @@ export default function Home() {
             name="email" 
             placeholder="Enter your email"
             required
-            className="p-3 rounded text-black min-w-[300px]"
+            className="p-3 rounded bg-white border border-gray-300 text-gray-900 placeholder-gray-500 min-w-[300px]"
           />
           <button 
             type="submit"
