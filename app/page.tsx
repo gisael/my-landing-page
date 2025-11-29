@@ -1,38 +1,26 @@
-import { createClient } from '@supabase/supabase-js'
-import { revalidatePath } from 'next/cache'
+'use client'
+
+import { useState } from 'react'
+import { addSubscriber } from './actions'
 
 export default function Home() {
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState('')
 
-  // 1. This is the "Server Action"
-  // It runs securely on the server, not the browser.
-  async function addSubscriber(formData: FormData) {
-    'use server'
-
-    // Get the data from the form
-    const name = formData.get('name')
-    const email = formData.get('email')
-
-    // Connect to Supabase
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
-
-    // Insert the data
-    const { error } = await supabase
-      .from('subscribers')
-      .insert({ email, name })
-
-    if (!name || !email) {
-      console.error("Missing name or email")
-      return // In a real app, you'd show an error message
+  async function handleSubmit(formData: FormData) {
+    setSuccess(false)
+    setError('')
+    
+    const result = await addSubscriber(formData)
+    
+    if (result?.error) {
+      setError(result.error)
+    } else if (result?.success) {
+      setSuccess(true)
+      setTimeout(() => setSuccess(false), 5000) // Hide after 5 seconds
     }
-
-    // Refresh the page so the form clears
-    revalidatePath('/')
   }
 
-  // 2. This is the UI (The Webpage)
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-950 text-white">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex-col">
@@ -41,27 +29,35 @@ export default function Home() {
           Coming Soon
         </h1>
 
-        {/* The Form */}
-        <form action={addSubscriber} className="flex flex-col gap-4 items-center">
-          {/* NEW FIELD: Name */}
+        <form action={handleSubmit} className="flex flex-col gap-4 items-center">
           <input 
             type="text" 
-            name="name" // <-- CRITICAL: This name must match the database column.
+            name="name"
             placeholder="Enter your name"
-            required
-            className="p-3 rounded bg-white border border-gray-300 text-gray-900 placeholder-gray-500 min-w-[300px]"
+            //required
+            className="p-3 rounded bg-white border border-gray-300 text-gray-900 placeholder-gray-500 w-full min-w-[300px]"
           />
-          {/* Existing Email Field */}
           <input 
             type="email" 
             name="email" 
             placeholder="Enter your email"
-            required
-            className="p-3 rounded bg-white border border-gray-300 text-gray-900 placeholder-gray-500 min-w-[300px]"
+            //required
+            className="p-3 rounded bg-white border border-gray-300 text-gray-900 placeholder-gray-500 w-full min-w-[300px]"
           />
+          <input 
+            type="text" 
+            name="address" 
+            placeholder="Enter your address"
+            //required
+            className="p-3 rounded bg-white border border-gray-300 text-gray-900 placeholder-gray-500 w-full min-w-[300px]"
+          />
+          
+          {success && <p className="text-green-500 font-bold">✓ Successfully added to waitlist!</p>}
+          {error && <p className="text-red-500 font-bold">✗ {error}</p>}
+          
           <button 
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+            className="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold py-3 px-6 rounded w-full min-w-[300px] transition-colors duration-200"
           >
             Join Waitlist
           </button>
