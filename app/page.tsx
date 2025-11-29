@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'; // <-- ADD THIS LINE
+import { createClient } from '@supabase/supabase-js'
 import { useState } from 'react'
 import { addSubscriber } from './actions'
 
@@ -25,6 +27,13 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-950 text-white">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex-col">
         
+        {/* NEW LINK TO DASHBOARD */}
+        <div className="absolute top-4 right-4">
+            <Link href="/dashboard" className="text-blue-400 hover:text-blue-300">
+                Go to Dashboard
+            </Link>
+        </div>
+
         <h1 className="text-4xl font-bold mb-8 text-center">
           Coming Soon
         </h1>
@@ -35,7 +44,7 @@ export default function Home() {
             name="name"
             placeholder="Enter your name"
             //required
-            className="p-3 rounded bg-white border border-gray-300 text-gray-900 placeholder-gray-500 w-full min-w-[300px] max-w-[600px]"
+            className="p-3 rounded bg-white border border-gray-300 text-gray-900 placeholder-gray-500 w-full min-w-[300px]"
           />
           <input 
             type="email" 
