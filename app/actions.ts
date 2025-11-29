@@ -19,7 +19,7 @@ export async function addSubscriber(formData: FormData) {
 
   const { error: dbError } = await supabase
     .from('subscribers')
-    .insert({ email, name})
+    .insert({ email, name, address})
 
   if (dbError) {
     return { error: dbError.message }

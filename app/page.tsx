@@ -35,7 +35,7 @@ export default function Home() {
             name="name"
             placeholder="Enter your name"
             //required
-            className="p-3 rounded bg-white border border-gray-300 text-gray-900 placeholder-gray-500 w-full min-w-[300px]"
+            className="p-3 rounded bg-white border border-gray-300 text-gray-900 placeholder-gray-500 w-full min-w-[300px] max-w-[600px]"
           />
           <input 
             type="email" 
