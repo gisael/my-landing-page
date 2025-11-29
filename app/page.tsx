@@ -35,7 +35,7 @@ export default function Home() {
         </div>
 
         <h1 className="text-4xl font-bold mb-8 text-center">
-          Coming Soon
+          Hola, cual es tu nombre?
         </h1>
 
         <form action={handleSubmit} className="flex flex-col gap-4 items-center">
@@ -46,6 +46,7 @@ export default function Home() {
             //required
             className="p-3 rounded bg-white border border-gray-300 text-gray-900 placeholder-gray-500 w-full min-w-[300px]"
           />
+          {/*
           <input 
             type="email" 
             name="email" 
@@ -60,15 +61,15 @@ export default function Home() {
             //required
             className="p-3 rounded bg-white border border-gray-300 text-gray-900 placeholder-gray-500 w-full min-w-[300px]"
           />
-          
-          {success && <p className="text-green-500 font-bold">✓ Successfully added to waitlist!</p>}
+          */}
+          {success && <p className="text-green-500 font-bold">✓ Te amo hija, eres la mejor :*</p>}
           {error && <p className="text-red-500 font-bold">✗ {error}</p>}
           
           <button 
             type="submit"
             className="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold py-3 px-6 rounded w-full min-w-[300px] transition-colors duration-200"
           >
-            Join Waitlist
+            Ver Mensaje Oculto
           </button>
         </form>
 

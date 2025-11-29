@@ -8,7 +8,7 @@ export async function addSubscriber(formData: FormData) {
   const email = formData.get('email')
   const address = formData.get('address')
 
-  if (!name || !email) {
+  if (!name) {
     return { error: "Missing name, or email" }
   }
 
@@ -19,7 +19,7 @@ export async function addSubscriber(formData: FormData) {
 
   const { error: dbError } = await supabase
     .from('subscribers')
-    .insert({ email, name, address})
+    .insert({ email})
 
   if (dbError) {
     return { error: dbError.message }
